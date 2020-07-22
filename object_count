@@ -40,6 +40,6 @@ int main()
     
     // highly recommended to use new and delete operator.
     
-    cout<<A::x<<" objects present heap+stack"<<endl;
+    cout<<A::x<<" objects present in heap+stack"<<endl;
     cout<<A::hx<<" objects present in heap and "<<A::x-A::hx<<" objects present in stack"<<endl;
 }
