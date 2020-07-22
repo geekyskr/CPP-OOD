@@ -1,0 +1,45 @@
+#include<iostream>
+using namespace std;
+class A
+{
+    public:
+    // static variable scope will be whole programme and does not need object to call A::x is enough. 
+    static int x, hx;
+    A(){
+        //value will be increses for every constructor call.
+        x++;
+    }
+    ~A(){
+        //value will be decreses for every distructor call.
+        x--;
+    }
+    void* operator new(size_t sz){
+        //this operator overloaded function only call when object created in heap.
+        hx++;
+    }
+    void operator delete(void* sz){
+        //this operator overloaded function only call when object deleted in heap.
+        hx--;
+    }
+};
+
+int A::x = 0, A::hx = 0;
+
+int main()
+{
+    // local variable present in stack.
+    A obj1, obj2;
+    
+    // local variale present in heap
+    A* obj6 = new A;    //create memory and call constructor.
+    A* obj8 = new A;
+    //A* obj7 = (A*)malloc(sizeof(A));    //create memory but does not call constructor x remain same.
+    
+    //free(obj7);   //does not call the destructor, object x still remain same.
+    delete obj6;    //call the destructor, x will be decremented.
+    
+    // highly recommended to use new and delete operator.
+    
+    cout<<A::x<<" objects present heap+stack"<<endl;
+    cout<<A::hx<<" objects present in heap and "<<A::x-A::hx<<" objects present in stack"<<endl;
+}
